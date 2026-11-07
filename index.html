@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎤 나도 K-POP 스타!</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Malgun Gothic', sans-serif
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f5f6fa;
+            color: #25283d
+        }
+
+        .screen {
+            max-width: 940px;
+            margin: auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px #17204d18
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin: 0 0 15px
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #697083;
+            margin: 0 0 24px
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #dfe3ef;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #fff
+        }
+
+        button {
+            font-family: inherit
+        }
+
+        .main-btn,
+        .next-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 18px;
+            border: 0;
+            border-radius: 12px;
+            background: #ff4d6d;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .main-btn:disabled,
+        .next-btn:disabled,
+        .roulette-btn:disabled {
+            background: #c9cbd4;
+            cursor: not-allowed
+        }
+
+        .count-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 20px
+        }
+
+        .count-card {
+            padding: 24px;
+            border: 0;
+            border-radius: 15px;
+            background: #eef2ff;
+            color: #313b70;
+            font-size: 18px;
+            cursor: pointer
+        }
+
+        .count-card:hover {
+            background: #dfe5ff
+        }
+
+        .stage-label {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 18px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .info {
+            text-align: center;
+            margin: 12px 0;
+            font-size: 18px
+        }
+
+        .card-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px
+        }
+
+        .nav-btn {
+            width: 52px;
+            height: 52px;
+            border: 0;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            background: #eef2ff
+        }
+
+        .idol-card {
+            width: 340px;
+            padding: 18px;
+            border-radius: 20px;
+            background: #fff;
+            text-align: center;
+            box-shadow: 0 5px 20px #17204d18
+        }
+
+        .idol-card img {
+            width: 210px;
+            height: 275px;
+            object-fit: cover;
+            border-radius: 15px
+        }
+
+        .stats {
+            margin-top: 12px
+        }
+
+        .stats div {
+            margin: 6px 0
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+            text-align: left
+        }
+
+        .pros-cons div {
+            padding: 10px;
+            border-radius: 11px;
+            font-size: 13px;
+            line-height: 1.45
+        }
+
+        .pros {
+            background: #e8fff6;
+            color: #087f5b
+        }
+
+        .cons {
+            background: #fff3e8;
+            color: #b45309
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 11px;
+            margin-top: 13px;
+            border: 0;
+            border-radius: 10px;
+            background: #4f6cff;
+            color: #fff;
+            cursor: pointer
+        }
+
+        .selected-box {
+            margin-top: 22px
+        }
+
+        .member-chip {
+            display: inline-block;
+            margin: 4px;
+            padding: 9px 13px;
+            border-radius: 24px;
+            background: #eaf2ff
+        }
+
+        .position-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px
+        }
+
+        .position-row {
+            display: grid;
+            grid-template-columns: 70px 1fr 180px;
+            align-items: center;
+            gap: 14px;
+            padding: 12px;
+            border: 1px solid #e2e6f0;
+            border-radius: 14px
+        }
+
+        .position-row img {
+            width: 60px;
+            height: 70px;
+            border-radius: 9px;
+            object-fit: cover
+        }
+
+        .position-row strong {
+            display: block;
+            margin-bottom: 5px
+        }
+
+        .position-hint {
+            font-size: 13px;
+            color: #6b7280
+        }
+
+        .position-select {
+            width: 180px
+        }
+
+        .score-panel {
+            margin-top: 18px;
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff0f5, #eef2ff)
+        }
+
+        .score-value {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ff4d6d;
+            margin: 7px 0
+        }
+
+        .score-note {
+            color: #687085;
+            font-size: 13px
+        }
+
+        .bonus-section {
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #e2e6f0;
+            border-radius: 16px
+        }
+
+        .bonus-section h3 {
+            margin: 8px 0
+        }
+
+        .bonus-section p {
+            line-height: 1.55
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 15px
+        }
+
+        .lucky-box {
+            min-height: 105px;
+            border: 0;
+            border-radius: 16px;
+            background: linear-gradient(145deg, #8168e8, #5b43b7);
+            color: #fff;
+            font-size: 35px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #43318f;
+            transition: transform .2s, opacity .2s
+        }
+
+        .lucky-box:hover:not(:disabled) {
+            transform: translateY(-4px)
+        }
+
+        .lucky-box:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            box-shadow: none
+        }
+
+        .lucky-box.opening {
+            animation: boxOpen .8s ease both
+        }
+
+        @keyframes boxOpen {
+            0% {
+                transform: scale(1) rotate(0);
+                filter: brightness(1)
+            }
+
+            45% {
+                transform: scale(1.35) rotate(-8deg);
+                filter: brightness(1.5)
+            }
+
+            75% {
+                transform: scale(.9) rotate(8deg)
+            }
+
+            100% {
+                transform: scale(1.08) rotate(0);
+                filter: brightness(1.2)
+            }
+        }
+
+        .bonus-result {
+            min-height: 25px;
+            margin-top: 12px;
+            font-weight: 700;
+            color: #5b43b7
+        }
+
+        .roulette-btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 12px;
+            border: 0;
+            border-radius: 10px;
+            background: #ff9f43;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer
+        }
+
+        .roulette-wrap {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 20px auto 10px
+        }
+
+        .roulette-pointer {
+            position: absolute;
+            z-index: 4;
+            top: -8px;
+            left: calc(50% - 13px);
+            width: 0;
+            height: 0;
+            border-left: 13px solid transparent;
+            border-right: 13px solid transparent;
+            border-top: 28px solid #ff4d6d
+        }
+
+        .roulette-wheel {
+            width: 220px;
+            height: 220px;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            background: conic-gradient(#ff7675 0 72deg, #74b9ff 72deg 144deg, #55efc4 144deg 216deg, #ffeaa7 216deg 288deg, #a29bfe 288deg 360deg);
+            box-shadow: 0 5px 16px #0002;
+            transition: transform 2.6s cubic-bezier(.17, .67, .13, 1)
+        }
+
+        .wheel-labels {
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            pointer-events: none
+        }
+
+        .wheel-label {
+            position: absolute;
+            width: 64px;
+            padding: 3px;
+            border-radius: 6px;
+            color: #222;
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 1.15;
+            text-align: center;
+            text-shadow: 0 1px #fff
+        }
+
+        .wheel-label:nth-child(1) {
+            top: 29px;
+            left: 78px
+        }
+
+        .wheel-label:nth-child(2) {
+            top: 78px;
+            right: 7px
+        }
+
+        .wheel-label:nth-child(3) {
+            bottom: 35px;
+            right: 25px
+        }
+
+        .wheel-label:nth-child(4) {
+            bottom: 35px;
+            left: 25px
+        }
+
+        .wheel-label:nth-child(5) {
+            top: 78px;
+            left: 7px
+        }
+
+        .roulette-center {
+            position: absolute;
+            z-index: 3;
+            top: calc(50% - 17px);
+            left: calc(50% - 17px);
+            width: 34px;
+            height: 34px;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            background: #ff4d6d
+        }
+
+        .spinning {
+            transform: rotate(var(--spin-angle, 1440deg));
+            transition: transform 2.6s cubic-bezier(.17, .67, .13, 1)
+        }
+
+        .audit-box {
+            padding: 24px;
+            text-align: center;
+            border-radius: 15px;
+            background: #202747;
+            color: #fff
+        }
+
+        .audit-loading {
+            font-size: 20px;
+            font-weight: 700;
+            animation: pulse 1s infinite
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: .45
+            }
+        }
+
+        .result-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 18px
+        }
+
+        .result-card {
+            display: grid;
+            grid-template-columns: 92px 1fr;
+            gap: 15px;
+            padding: 14px;
+            border: 1px solid #e2e6f0;
+            border-radius: 14px;
+            background: #fafbff
+        }
+
+        .result-card img {
+            width: 92px;
+            height: 112px;
+            object-fit: cover;
+            border-radius: 10px
+        }
+
+        .result-card h3 {
+            margin: 0 0 7px
+        }
+
+        .result-card p {
+            margin: 4px 0;
+            line-height: 1.45;
+            font-size: 14px
+        }
+
+        .result-position {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: #ffe7ed;
+            color: #c52d4d;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .eligibility {
+            padding: 14px;
+            border-radius: 12px;
+            margin-top: 14px;
+            font-weight: 700
+        }
+
+        .eligible {
+            background: #e8fff6;
+            color: #087f5b
+        }
+
+        .not-eligible {
+            background: #fff0f0;
+            color: #c0392b
+        }
+
+        .hall-list {
+            margin-top: 12px;
+            padding-left: 24px;
+            line-height: 1.9
+        }
+
+        .small-btn {
+            padding: 10px 13px;
+            border: 0;
+            border-radius: 9px;
+            background: #4f6cff;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .small-btn:disabled {
+            background: #c9cbd4;
+            cursor: not-allowed
+        }
+
+        .action-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px
+        }
+
+        .rank-message {
+            min-height: 22px;
+            margin-top: 9px;
+            color: #087f5b;
+            font-weight: 700
+        }
+
+        @media(max-width:700px) {
+            body {
+                padding: 10px
+            }
+
+            .screen {
+                padding: 20px
+            }
+
+            .position-row {
+                grid-template-columns: 58px 1fr
+            }
+
+            .position-select {
+                grid-column: 1 / -1;
+                width: 100%
+            }
+
+            .lucky-box {
+                min-height: 78px;
+                font-size: 25px
+            }
+
+            .card-area {
+                flex-direction: column
+            }
+
+            .nav-btn {
+                width: 100%;
+                height: 42px;
+                border-radius: 10px
+            }
+
+            .idol-card {
+                width: 100%
+            }
+
+            .idol-card img {
+                width: 100%;
+                height: auto
+            }
+
+            .result-card {
+                grid-template-columns: 70px 1fr
+            }
+
+            .result-card img {
+                width: 70px;
+                height: 88px
+            }
+
+            .action-row {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+
+    <style>
+        .main-hall {
+            margin-top: 24px;
+            padding: 18px;
+            border: 1px solid #e2e6f0;
+            border-radius: 16px;
+            background: #fafbff
+        }
+
+        .hall-entry {
+            display: block;
+            width: 100%;
+            padding: 10px 4px;
+            border: 0;
+            border-bottom: 1px solid #e2e6f0;
+            background: transparent;
+            text-align: left;
+            color: #313b70;
+            cursor: pointer;
+            font-size: 15px
+        }
+
+        .hall-entry:hover {
+            color: #ff4d6d
+        }
+
+        .hall-detail {
+            padding: 18px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fff0f5, #eef2ff);
+            line-height: 1.8
+        }
+
+        .progress-track {
+            height: 18px;
+            margin: 20px 0 8px;
+            border-radius: 12px;
+            background: #dfe3ef;
+            overflow: hidden
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #4f6cff, #00b894);
+            transition: width .08s linear
+        }
+
+        .progress-percent {
+            text-align: center;
+            font-weight: 700;
+            color: #dfeaff
+        }
+
+        .grade-badge {
+            display: inline-block;
+            min-width: 66px;
+            margin: 6px;
+            padding: 8px 14px;
+            border-radius: 14px;
+            background: #ff4d6d;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 800
+        }
+
+        .result-grade {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ff4d6d
+        }
+
+        .main-hall .hall-list,
+        .bonus-section .hall-list {
+            list-style: none;
+            padding-left: 0
+        }
+
+        .main-hall .hall-list li,
+        .bonus-section .hall-list li {
+            margin: 0
+        }
+
+        .hall-medal {
+            display: inline-block;
+            width: 32px;
+            font-size: 21px
+        }
+
+        .member-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px;
+            padding: 4px 7px 4px 5px;
+            border-radius: 24px;
+            background: #eaf2ff
+        }
+
+        .member-chip img {
+            width: 28px;
+            height: 34px;
+            object-fit: cover;
+            border-radius: 50%
+        }
+
+        .member-chip span {
+            font-size: 14px
+        }
+
+        .member-remove {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: #fff;
+            color: #d63031;
+            font-size: 16px;
+            line-height: 18px;
+            cursor: pointer
+        }
+
+        .member-remove:hover {
+            background: #ffe1e1
+        }
+
+        #step3 {
+            padding: 18px
+        }
+
+        #step3 .info {
+            margin: 7px 0
+        }
+
+        #step3 .card-area {
+            margin-top: 8px;
+            gap: 8px
+        }
+
+        #step3 .idol-card {
+            width: 300px;
+            padding: 10px
+        }
+
+        #step3 .idol-card img {
+            width: 135px;
+            height: 170px
+        }
+
+        #step3 .stats {
+            margin-top: 6px;
+            font-size: 14px
+        }
+
+        #step3 .stats div {
+            margin: 3px 0
+        }
+
+        #step3 .pros-cons {
+            margin-top: 8px;
+            gap: 6px
+        }
+
+        #step3 .pros-cons div {
+            padding: 7px;
+            font-size: 12px
+        }
+
+        #step3 .select-btn {
+            padding: 8px;
+            margin-top: 8px
+        }
+
+        #step3 .selected-box {
+            margin-top: 10px
+        }
+
+        #step3 .next-btn {
+            margin-top: 8px;
+            padding: 11px
+        }
+
+        @media(max-width:700px) {
+            #step3 .card-area {
+                flex-direction: row;
+                display: grid;
+                grid-template-columns: 38px minmax(0, 1fr) 38px;
+                align-items: center;
+                gap: 5px
+            }
+
+            #step3 .nav-btn {
+                width: 38px;
+                height: 38px;
+                padding: 0;
+                border-radius: 10px
+            }
+
+            #step3 .idol-card {
+                width: 100%;
+                padding: 8px
+            }
+
+            #step3 .idol-card img {
+                width: 110px;
+                height: 138px
+            }
+
+            #step3 h2 {
+                font-size: 20px;
+                margin-bottom: 6px
+            }
+
+            #step3 .pros-cons div {
+                font-size: 11px;
+                line-height: 1.25
+            }
+
+            #step3 .member-chip {
+                margin: 2px;
+                padding: 3px 5px 3px 3px
+            }
+
+            #step3 .member-chip img {
+                width: 24px;
+                height: 28px
+            }
+        }
+
+        #step3 .idol-card img {
+            width: 175px;
+            height: 220px
+        }
+
+        @media(max-width:700px) {
+            #step3 .idol-card img {
+                width: 145px;
+                height: 180px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="step1" class="screen">
+        <h1>🎤 나도 K-POP 스타!</h1>
+        <p class="subtitle">내가 직접 걸그룹을 만들고 데뷔시켜라!</p>
+        <input id="teamName" type="text" placeholder="팀명을 입력하세요">
+        <button class="main-btn" onclick="goStep2()">다음 ➔</button>
+        <div class="main-hall">
+            <span class="stage-label">TOP 5</span>
+            <h3>🏆 명예의 전당</h3>
+            <p>팀을 선택하면 상세 기록을 확인할 수 있습니다.</p>
+            <ol id="mainHallOfFame" class="hall-list"></ol>
+        </div>
+    </section>
+
+    <section id="step2" class="screen" style="display:none">
+        <h2>👥 몇 명으로 데뷔할까요?</h2>
+        <div class="count-grid">
+            <button class="count-card" onclick="selectMemberCount(2)">2명<br><small>최강 유닛</small></button>
+            <button class="count-card" onclick="selectMemberCount(3)">3명<br><small>공격형</small></button>
+            <button class="count-card" onclick="selectMemberCount(4)">4명<br><small>밸런스형</small></button>
+            <button class="count-card" onclick="selectMemberCount(5)">5명<br><small>대형 그룹</small></button>
+        </div>
+    </section>
+
+    <section id="step3" class="screen" style="display:none">
+        <span class="stage-label">STEP 1 · 멤버 선택</span>
+        <h2>🎤 연습생 선발</h2>
+        <div class="info">현재 선발 <span id="selectedCount">0</span> / <span id="targetCount">0</span>명</div>
+        <div class="card-area">
+            <button class="nav-btn" onclick="prevMember()">◀</button>
+            <div class="idol-card">
+                <img id="idolImage" alt="연습생 사진">
+                <h3 id="idolName"></h3>
+                <div class="stats">
+                    <div>🎤 노래 : <span id="vocal"></span></div>
+                    <div>💃 춤 : <span id="dance"></span></div>
+                    <div>💎 비주얼 : <span id="visual"></span></div>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros"><strong>✅ 장점</strong><p id="pros"></p></div>
+                    <div class="cons"><strong>🛠️ 보완점</strong><p id="cons"></p></div>
+                </div>
+                <button id="selectBtn" class="select-btn" onclick="toggleMember()">선택하기</button>
+            </div>
+            <button class="nav-btn" onclick="nextMember()">▶</button>
+        </div>
+        <div class="selected-box">
+            <h3>✅ 선택 멤버</h3>
+            <div id="selectedList"></div>
+        </div>
+        <button id="nextBtn" class="next-btn" disabled onclick="goToPositionAssignment()">포지션 배정하기</button>
+    </section>
+
+    <section id="positionStep" class="screen" style="display:none">
+        <span class="stage-label">STEP 2 · 포지션 배정</span>
+        <h2>🌟 멤버별 포지션을 정해주세요</h2>
+        <p class="subtitle">멤버의 특성에 맞는 포지션을 배정하면 포지션 적합도 점수가 올라갑니다.</p>
+        <div id="positionList" class="position-list"></div>
+        <button class="main-btn" onclick="confirmPositions()">포지션 확정하고 다음 단계로</button>
+    </section>
+
+    <section id="step4" class="screen" style="display:none">
+        <span class="stage-label">STEP 3 · 보너스와 기획사</span>
+        <h2>🎉 데뷔 준비</h2>
+        <p class="subtitle" id="resultTeamName"></p>
+        <div class="score-panel">
+            <div>현재 통합 점수</div>
+            <div class="score-value"><span id="scoreValue">0</span>점</div>
+            <div class="score-note">멤버 수와 관계없이 멤버별 평균 점수로 계산됩니다. 데뷔 기준: 70점 초과</div>
+        </div>
+        <div class="bonus-section">
+            <span class="stage-label">BONUS 1</span>
+            <h3>🎁 럭키박스</h3>
+            <p>5개 중 2개를 선택하세요. 상자를 열 때마다 보너스 점수가 공개됩니다.</p>
+            <div class="bonus-grid">
+                <button class="lucky-box" onclick="openLuckyBox(0)">🎁</button>
+                <button class="lucky-box" onclick="openLuckyBox(1)">🎁</button>
+                <button class="lucky-box" onclick="openLuckyBox(2)">🎁</button>
+                <button class="lucky-box" onclick="openLuckyBox(3)">🎁</button>
+                <button class="lucky-box" onclick="openLuckyBox(4)">🎁</button>
+            </div>
+            <div id="luckyResult" class="bonus-result"></div>
+        </div>
+        <div id="rouletteSection" class="bonus-section" style="display:none">
+            <span class="stage-label">BONUS 2</span>
+            <h3>🎲 기획사 룰렛</h3>
+            <p>화살표가 가리키는 기획사와 멤버 특성이 잘 맞으면 추가 점수를 받습니다.</p>
+            <div class="roulette-wrap">
+                <div class="roulette-pointer"></div>
+                <div id="rouletteWheel" class="roulette-wheel"></div>
+                <div id="wheelLabels" class="wheel-labels" aria-label="기획사 룰렛 칸">
+                    <span class="wheel-label">스타라이트<br>엔터</span>
+                    <span class="wheel-label">루미너스<br>뮤직</span>
+                    <span class="wheel-label">프리즘<br>엔터</span>
+                    <span class="wheel-label">블루문<br>레이블</span>
+                    <span class="wheel-label">오로라<br>기획사</span>
+                </div>
+                <div class="roulette-center"></div>
+            </div>
+            <button id="rouletteBtn" class="roulette-btn" onclick="spinAgency()">룰렛 돌리기</button>
+            <div id="agencyResult" class="bonus-result"></div>
+        </div>
+        <div id="auditSection" class="bonus-section" style="display:none">
+            <span class="stage-label">STEP 4 · 심사</span>
+            <div class="audit-box">
+                <div id="auditMessage" class="audit-loading">🎯 데뷔 심사 진행 중...</div>
+                <p>포지션, 럭키박스, 기획사 적합도를 종합하고 있습니다.</p>
+            </div>
+        </div>
+        <div id="resultSection" class="bonus-section" style="display:none">
+            <span class="stage-label">심사 결과</span>
+            <h3 id="resultTitle"></h3>
+            <div id="resultMessage" class="eligibility"></div>
+            <div id="resultList" class="result-list"></div>
+            <div class="action-row"><button id="rankBtn" class="small-btn" onclick="registerRanking()">랭킹 등록</button></div>
+            <div id="rankMessage" class="rank-message"></div>
+            <button class="main-btn" onclick="showHall()">명예의 전당으로 이동</button>
+        </div>
+    </section>
+
+    <section id="hallSection" class="screen" style="display:none">
+        <span class="stage-label">STEP 5 · 명예의 전당 상세</span>
+        <h2>🏆 <span id="hallDetailTitle">명예의 전당</span></h2>
+        <div id="hallDetailCard" class="hall-detail"></div>
+        <div class="bonus-section">
+            <h3>TOP 5 명예의 전당</h3>
+            <ol id="hallOfFame" class="hall-list"></ol>
+        </div>
+        <div id="hallEligibility" class="eligibility"></div>
+        <button id="memberIntroBtn" class="main-btn" onclick="showMemberIntro()">최종 멤버 소개 보기</button>
+        <button id="hallHomeBtn" class="main-btn" onclick="goToMain()">메인으로 돌아가기</button>
+    </section>
+
+    <section id="memberIntroSection" class="screen" style="display:none">
+        <span class="stage-label">STEP 6 · 마지막 단계</span>
+        <h2>🌟 최종 멤버 소개</h2>
+        <p class="subtitle">우리 팀의 데뷔 멤버를 소개합니다.</p>
+        <div id="finalMemberList" class="result-list"></div>
+        <button class="main-btn" onclick="restartGame()">처음부터 다시 선택하기</button>
+    </section>
+
+    <script>
+        const trainees = [{
+            name: "유나", vocal: 4, dance: 3, visual: 5, image: "img/A.png", pros: "무대에서 돋보이는 비주얼", cons: "춤의 디테일을 더 연습하면 좋아요"
+        }, {
+            name: "리아", vocal: 2, dance: 5, visual: 5, image: "img/B.png", pros: "파워풀한 춤과 강한 화제성", cons: "보컬 기본기를 보완해야 해요"
+        }, {
+            name: "시아", vocal: 5, dance: 2, visual: 4, image: "img/C.png", pros: "팀의 중심을 잡는 뛰어난 보컬", cons: "안무 숙련도가 더 필요해요"
+        }, {
+            name: "하린", vocal: 4, dance: 4, visual: 3, image: "img/D.png", pros: "노래와 춤이 모두 안정적", cons: "개성 있는 표정 연기가 필요해요"
+        }, {
+            name: "나린", vocal: 3, dance: 5, visual: 4, image: "img/E.png", pros: "빠르고 정확한 퍼포먼스", cons: "고음과 감정 표현을 키워야 해요"
+        }, {
+            name: "다온", vocal: 4, dance: 4, visual: 4, image: "img/F.png", pros: "세 분야가 고르게 균형 잡힘", cons: "확실한 대표 포지션이 필요해요"
+        }, {
+            name: "민아", vocal: 2, dance: 5, visual: 3, image: "img/G.png", pros: "팀에 활력을 주는 춤 실력", cons: "보컬 트레이닝이 중요해요"
+        }, {
+            name: "채린", vocal: 5, dance: 3, visual: 3, image: "img/H.png", pros: "안정적인 고음과 풍부한 음색", cons: "퍼포먼스 자신감을 키워야 해요"
+        }, {
+            name: "세아", vocal: 4, dance: 2, visual: 5, image: "img/I.png", pros: "카메라를 사로잡는 매력", cons: "기본 안무부터 차근차근 익혀야 해요"
+        }, {
+            name: "유리", vocal: 3, dance: 3, visual: 5, image: "img/J.png", pros: "친근한 이미지와 뛰어난 비주얼", cons: "노래와 춤 모두 꾸준한 연습이 필요해요"
+        }, {
+            name: "니아", vocal: 4, dance: 5, visual: 2, image: "img/K.png", pros: "강렬한 춤으로 무대를 장악", cons: "스타일링과 표정 연기를 보완하면 좋아요"
+        }, {
+            name: "아린", vocal: 5, dance: 4, visual: 4, image: "img/L.png", pros: "보컬과 퍼포먼스를 함께 소화", cons: "팀의 색깔에 맞는 개성을 더 보여줘야 해요"
+        }];
+
+        const positions = {
+            leader: { label: "리더", description: "팀을 이끄는 중심 역할" },
+            vocal: { label: "메인 보컬", description: "노래 실력을 가장 잘 살리는 역할" },
+            dance: { label: "메인 댄서", description: "춤 실력을 가장 잘 살리는 역할" },
+            visual: { label: "비주얼", description: "비주얼과 카메라 매력을 살리는 역할" },
+            allrounder: { label: "올라운더", description: "여러 능력을 고르게 보여주는 역할" }
+        };
+
+        const agencies = [{
+            name: "스타라이트 엔터", target: "vocal", feature: "보컬 중심"
+        }, {
+            name: "루미너스 뮤직", target: "dance", feature: "퍼포먼스 중심"
+        }, {
+            name: "프리즘 엔터", target: "visual", feature: "스타성 중심"
+        }, {
+            name: "블루문 레이블", target: "balanced", feature: "안정적인 균형형"
+        }, {
+            name: "오로라 기획사", target: "allrounder", feature: "다재다능한 팀 선호"
+        }];
+
+        const luckyBonuses = [2, 4, 6, 8, 10], DEBUT_THRESHOLD = 70;
+        let currentIndex = 0,
+            selectedMembers = [],
+            targetCount = 0,
+            positionAssignments = {},
+            memberScores = [],
+            baseScore = 0,
+            luckyScore = 0,
+            agencyBonus = 0,
+            gameScore = 0,
+            luckyBoxUsed = [],
+            luckyBoxValues = [],
+            selectedAgency = null,
+            rankingRegistered = false;
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        function gradeForScore(score) {
+            if (score >= 100) return "S";
+            if (score >= 90) return "A";
+            if (score >= 80) return "B";
+            if (score >= 70) return "C";
+            if (score >= 60) return "D";
+            return "F";
+        }
+
+        function rankBadge(index) {
+            return index === 0 ? "&#128081;" : index === 1 ? "&#128142;" : index === 2 ? "&#129351;" : index === 3 ? "&#129352;" : index === 4 ? "&#129353;" : "";
+        }
+
+        function addGradeToResult() {
+            const grade = gradeForScore(gameScore);
+            if (!$('scoreGrade')) $('scoreValue').parentElement.insertAdjacentHTML("afterend", `<div>등급 <span id="scoreGrade" class="grade-badge">${grade}</span></div>`);
+            else $('scoreGrade').innerText = grade;
+            $('resultMessage').innerHTML = `${gameScore}점 · <span class="result-grade">${grade}등급</span><br>${gameScore > DEBUT_THRESHOLD ? "데뷔 심사 통과" : "데뷔 기준 미달"}`;
+        }
+
+        function getAuditScreen() {
+            let screen = $("auditScreen");
+            if (!screen) {
+                screen = document.createElement("section");
+                screen.id = "auditScreen";
+                screen.className = "screen";
+                screen.style.display = "none";
+                document.body.appendChild(screen);
+            }
+            return screen;
+        }
+
+        function showOnly(id) {
+            ["step1", "step2", "step3", "positionStep", "step4", "hallSection", "memberIntroSection"].forEach(item => $(item).style.display = item === id ? "block" : "none");
+            if ($("auditScreen") && id !== "auditScreen") $("auditScreen").style.display = "none";
+        }
+
+        function goStep2() {
+            const input = $('teamName').value.trim();
+            if (!input) {
+                alert("팀명을 입력하세요.");
+                return;
+            }
+            if (/\s+삭제$/.test(input)) {
+                const teamName = input.replace(/\s+삭제$/, '').trim();
+                const records = JSON.parse(localStorage.getItem("kpopHallOfFame") || "[]");
+                const nextRecords = records.filter(record => record.team !== teamName);
+                if (nextRecords.length === records.length) {
+                    alert(`명예의 전당에서 '${teamName}' 팀을 찾지 못했습니다.`);
+                } else {
+                    localStorage.setItem("kpopHallOfFame", JSON.stringify(nextRecords));
+                    alert(`'${teamName}' 팀을 삭제했습니다.`);
+                    renderMainHall();
+                }
+                $('teamName').value = "";
+                return;
+            }
+            showOnly("step2");
+        }
+
+        function selectMemberCount(count) {
+            targetCount = count;
+            selectedMembers = [];
+            $('targetCount').innerText = count;
+            showOnly("step3");
+            updateSelected();
+            renderMember();
+        }
+
+        function renderMember() {
+            const idol = trainees[currentIndex];
+            $('idolImage').src = idol.image;
+            $('idolName').innerText = idol.name;
+            $('vocal').innerText = "★".repeat(idol.vocal);
+            $('dance').innerText = "★".repeat(idol.dance);
+            $('visual').innerText = "★".repeat(idol.visual);
+            $('pros').innerText = idol.pros;
+            $('cons').innerText = idol.cons;
+            $('selectBtn').innerText = selectedMembers.includes(idol.name) ? "선택취소" : "선택하기";
+        }
+
+        function nextMember() {
+            currentIndex = (currentIndex + 1) % trainees.length;
+            renderMember();
+        }
+
+        function prevMember() {
+            currentIndex = (currentIndex - 1 + trainees.length) % trainees.length;
+            renderMember();
+        }
+
+        function toggleMember() {
+            const idol = trainees[currentIndex],
+                index = selectedMembers.indexOf(idol.name);
+            if (index > -1) selectedMembers.splice(index, 1);
+            else {
+                if (selectedMembers.length >= targetCount) {
+                    alert(`${targetCount}명만 선택 가능합니다.`);
+                    return;
+                }
+                selectedMembers.push(idol.name);
+            }
+            updateSelected();
+            renderMember();
+        }
+
+        function updateSelected() {
+            $('selectedCount').innerText = selectedMembers.length;
+            $('selectedList').innerHTML = selectedMembers.map(name => {
+                const member = trainees.find(item => item.name === name);
+                return `<span class="member-chip"><img src="${member.image}" alt="${name}"><span>${name}</span><button class="member-remove" onclick="removeMember('${name}')" aria-label="${name} 선택 취소">×</button></span>`;
+            }).join("");
+            $('nextBtn').disabled = selectedMembers.length !== targetCount;
+        }
+
+        function removeMember(name) {
+            const index = selectedMembers.indexOf(name);
+            if (index > -1) {
+                selectedMembers.splice(index, 1);
+                updateSelected();
+                renderMember();
+            }
+        }
+
+        function recommendedPosition(member) {
+            const stats = [
+                ['vocal', member.vocal],
+                ['dance', member.dance],
+                ['visual', member.visual]
+            ].sort((a, b) => b[1] - a[1]);
+            if (stats[0][1] - stats[2][1] <= 1) return "allrounder";
+            return stats[0][0];
+        }
+
+        function goToPositionAssignment() {
+            if (selectedMembers.length !== targetCount) return;
+            positionAssignments = {};
+            $('positionList').innerHTML = selectedMembers.map(name => {
+                const member = trainees.find(item => item.name === name),
+                    recommend = recommendedPosition(member);
+                positionAssignments[name] = recommend;
+                return `<div class="position-row"><img src="${member.image}" alt="${member.name} 사진"><div><strong>${member.name}</strong><span class="position-hint">추천: ${positions[recommend].label} · ${positions[recommend].description}</span></div><select class="position-select" data-member="${member.name}" onchange="positionAssignments[this.dataset.member]=this.value"><option value="leader">리더</option><option value="vocal">메인 보컬</option><option value="dance">메인 댄서</option><option value="visual">비주얼</option><option value="allrounder">올라운더</option></select></div>`;
+            }).join("");
+            document.querySelectorAll(".position-select").forEach(select => select.value = positionAssignments[select.dataset.member]);
+            showOnly("positionStep");
+        }
+
+        function confirmPositions() {
+            const selectedTrainees = selectedMembers.map(name => trainees.find(member => member.name === name));
+            memberScores = selectedTrainees.map(member => {
+                const position = positionAssignments[member.name],
+                    average = (member.vocal + member.dance + member.visual) / 15 * 80;
+                let fit = 0;
+                if (position === recommendedPosition(member)) fit = 20;
+                else if (position === "allrounder" && Math.max(member.vocal, member.dance, member.visual) - Math.min(member.vocal, member.dance, member.visual) <= 1) fit = 15;
+                return {
+                    member, position, score: Math.round(Math.min(100, average + fit))
+                };
+            });
+            baseScore = Math.round(memberScores.reduce((sum, item) => sum + item.score, 0) / memberScores.length);
+            luckyScore = 0;
+            agencyBonus = 0;
+            gameScore = baseScore;
+            luckyBoxUsed = [];
+            luckyBoxValues = shuffle([...luckyBonuses]);
+            selectedAgency = null;
+            rankingRegistered = false;
+            $('resultTeamName').innerText = `${$('teamName').value.trim()} · ${targetCount}인조`;
+            $('scoreValue').innerText = gameScore;
+            $('luckyResult').innerText = "";
+            $('agencyResult').innerText = "";
+            $('auditSection').style.display = "none";
+            $('resultSection').style.display = "none";
+            $('rouletteSection').style.display = "none";
+            $('rouletteBtn').disabled = false;
+            $('rouletteWheel').classList.remove("spinning");
+            $('wheelLabels').classList.remove("spinning");
+            $('rouletteWheel').style.setProperty("--spin-angle", "0deg");
+            $('wheelLabels').style.setProperty("--spin-angle", "0deg");
+            document.querySelectorAll(".lucky-box").forEach(button => {
+                button.disabled = false;
+                button.classList.remove("opening");
+                button.innerHTML = "🎁";
+            });
+            showOnly("step4");
+        }
+
+        function openLuckyBox(index) {
+            if (luckyBoxUsed.length >= 2 || luckyBoxUsed.includes(index)) return;
+            const button = document.querySelectorAll(".lucky-box")[index];
+            luckyBoxUsed.push(index);
+            button.disabled = true;
+            button.classList.add("opening");
+            setTimeout(() => {
+                const bonus = luckyBoxValues[index];
+                button.innerText = `+${bonus}점`;
+                luckyScore += bonus;
+                gameScore = baseScore + luckyScore;
+                $('scoreValue').innerText = gameScore;
+                $('luckyResult').innerText = `럭키박스 ${luckyBoxUsed.length}/2개 완료: +${bonus}점`;
+                if (luckyBoxUsed.length === 2) {
+                    document.querySelectorAll(".lucky-box").forEach(item => {
+                        if (!item.disabled) item.disabled = true;
+                    });
+                    $('rouletteSection').style.display = "block";
+                    $('rouletteSection').scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }, 800);
+        }
+
+        function spinAgency() {
+            if (selectedAgency) return;
+            const agencyIndex = Math.floor(Math.random() * agencies.length);
+            selectedAgency = agencies[agencyIndex];
+            const sector = 360 / agencies.length,
+                angle = 360 * 5 + (360 - (agencyIndex * sector + sector / 2));
+            $('rouletteWheel').style.setProperty("--spin-angle", `${angle}deg`);
+            $('wheelLabels').style.setProperty("--spin-angle", `${angle}deg`);
+            $('rouletteBtn').disabled = true;
+            $('agencyResult').innerText = "룰렛이 돌아가는 중...";
+            $('rouletteWheel').classList.add("spinning");
+            $('wheelLabels').classList.add("spinning");
+            setTimeout(() => {
+                $('agencyResult').innerText = `화살표가 가리킨 기획사: ${selectedAgency.name} · ${selectedAgency.feature}`;
+                prepareAuditStep();
+                $('auditSection').style.display = "block";
+                $('auditSection').scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 2800);
+        }
+
+        function calculateAgencyBonus() {
+            const averages = { vocal: 0, dance: 0, visual: 0 };
+            memberScores.forEach(item => {
+                averages.vocal += item.member.vocal;
+                averages.dance += item.member.dance;
+                averages.visual += item.member.visual;
+            });
+            Object.keys(averages).forEach(key => averages[key] /= memberScores.length);
+            if (selectedAgency.target === "balanced" || selectedAgency.target === "allrounder") return Math.round(((averages.vocal + averages.dance + averages.visual) / 15) * 10);
+            return Math.round((averages[selectedAgency.target] / 5) * 10);
+        }
+
+        function prepareAuditStep() {
+            const screen = getAuditScreen();
+            screen.innerHTML = '<span class="stage-label">STEP 4 · 심사 준비</span><h2>데뷔 심사</h2>';
+            screen.appendChild($('auditSection'));
+            $('auditSection').innerHTML = '<div class="audit-box"><div id="auditMessage" class="audit-loading">심사 시작을 눌러 주세요.</div><p>포지션, 럭키박스, 기획사 적합도를 종합합니다.</p><button id="auditStartBtn" class="roulette-btn" onclick="startAudit()">심사 시작</button></div>';
+            $('step4').style.display = "none";
+            screen.style.display = "block";
+        }
+
+        function startAudit() {
+            if (!selectedAgency || $('auditStartBtn').disabled) return;
+            $('auditStartBtn').disabled = true;
+            $('auditMessage').innerHTML = "🎯 데뷔 심사 진행 중...";
+            $('auditSection').innerHTML = '<div class="audit-box"><div id="auditMessage" class="audit-loading">🎯 데뷔 심사 진행 중...</div><p>심사위원들이 결과를 분석하고 있습니다.</p><div class="progress-track"><div id="auditProgress" class="progress-bar"></div></div><div id="auditPercent" class="progress-percent">0%</div></div>';
+            $('auditScreen').appendChild($('auditSection'));
+            const duration = 2600, start = performance.now();
+            const timer = setInterval(() => {
+                const percent = Math.min(100, Math.round((performance.now() - start) / duration * 100));
+                $('auditProgress').style.width = `${percent}%`;
+                $('auditPercent').innerText = `${percent}%`;
+                if (percent >= 100) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        agencyBonus = calculateAgencyBonus();
+                        gameScore = baseScore + luckyScore + agencyBonus;
+                        $('scoreValue').innerText = gameScore;
+                        $('auditScreen').appendChild($('resultSection'));
+                        $('auditSection').style.display = "none";
+                        renderResult();
+                        addGradeToResult();
+                        addResultMainButton();
+                        $('resultSection').style.display = "block";
+                        $('resultSection').scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 180);
+                }
+            }, 80);
+        }
+
+        function renderResult() {
+            const eligible = gameScore > DEBUT_THRESHOLD;
+            $('resultTitle').innerText = eligible ? "데뷔 심사 통과" : "데뷔 심사 결과";
+            $('resultMessage').className = `eligibility ${eligible ? "eligible" : "not-eligible"}`;
+            $('resultMessage').innerText = eligible ? `축하합니다. ${gameScore}점으로 데뷔할 수 있습니다.` : `${gameScore}점으로 데뷔 기준 ${DEBUT_THRESHOLD}점을 넘지 못했습니다.`;
+            $('resultList').innerHTML = memberScores.map(item => `<article class="result-card"><img src="${item.member.image}" alt="${item.member.name} 사진"><div><h3>${item.member.name}</h3><span class="result-position">${positions[item.position].label}</span><p>개인 점수: ${item.score}점</p><p>장점: ${item.member.pros}</p><p>보완점: ${item.member.cons}</p></div></article>`).join("");
+            $('rankBtn').disabled = false;
+            $('rankMessage').innerText = "";
+        }
+
+        function registerRanking() {
+            if (rankingRegistered) return;
+            const records = JSON.parse(localStorage.getItem("kpopHallOfFame") || "[]");
+            records.push({
+                team: $('teamName').value.trim(),
+                score: gameScore,
+                members: targetCount,
+                agency: selectedAgency.name,
+                memberList: memberScores.map(item => ({
+                    name: item.member.name,
+                    position: positions[item.position].label,
+                    image: item.member.image
+                }))
+            });
+            records.sort((a, b) => b.score - a.score);
+            localStorage.setItem("kpopHallOfFame", JSON.stringify(records.slice(0, 10)));
+            rankingRegistered = true;
+            $('rankBtn').disabled = true;
+            $('rankMessage').innerText = "랭킹에 등록되었습니다.";
+            renderMainHall();
+        }
+
+        function renderHall() {
+            const records = JSON.parse(localStorage.getItem("kpopHallOfFame") || "[]").slice(0, 5);
+            $('hallOfFame').innerHTML = records.length ? records.map((record, index) => `<li><span class="hall-medal">${rankBadge(index)}</span><strong>${index + 1}위 ${record.team}</strong> — ${record.score}점 · ${gradeForScore(record.score)}등급 · ${record.agency} · ${record.members}인조</li>`).join("") : "<li>아직 등록된 팀이 없습니다.</li>";
+        }
+
+        function renderMainHall() {
+            const records = JSON.parse(localStorage.getItem("kpopHallOfFame") || "[]").slice(0, 5);
+            $('mainHallOfFame').innerHTML = records.length ? records.map((record, index) => `<li><button class="hall-entry" onclick="openHallDetail(${index})"><span class="hall-medal">${rankBadge(index)}</span><strong>${index + 1}위 ${record.team}</strong> — ${record.score}점 · ${gradeForScore(record.score)}등급 · ${record.agency}</button></li>`).join("") : "<li>아직 등록된 팀이 없습니다.</li>";
+        }
+
+        function renderHallDetail(record) {
+            $('hallDetailTitle').innerText = record.team;
+            const members = record.memberList || [];
+            $('hallDetailCard').innerHTML = `<strong>${record.team}</strong><br>최종 점수: ${record.score}점<br>등급: ${gradeForScore(record.score)}등급<br>기획사: ${record.agency}<br>멤버 수: ${record.members}인조${members.length ? `<div class="result-list">${members.map(member => `<article class="result-card"><img src="${member.image}" alt="${member.name} 사진"><div><h3>${member.name}</h3><span class="result-position">${member.position}</span></div></article>`).join("")}</div>` : "<p>이 팀은 이전 버전에서 등록되어 멤버 사진 정보가 없습니다.</p>"}`;
+        }
+
+        function showHall() {
+            showOnly("hallSection");
+            renderHall();
+            renderHallDetail({
+                team: $('teamName').value.trim(),
+                score: gameScore,
+                agency: selectedAgency ? selectedAgency.name : "미등록",
+                members: targetCount,
+                memberList: memberScores.map(item => ({
+                    name: item.member.name,
+                    position: positions[item.position].label,
+                    image: item.member.image
+                }))
+            });
+            $('hallHomeBtn').style.display = "none";
+            $('memberIntroBtn').style.display = "block";
+            const eligible = gameScore > DEBUT_THRESHOLD;
+            $('hallEligibility').className = `eligibility ${eligible ? "eligible" : "not-eligible"}`;
+            $('hallEligibility').innerText = eligible ? `데뷔 가능: ${gameScore}점입니다.` : `데뷔 불가: ${DEBUT_THRESHOLD}점 초과가 필요합니다.`;
+            $('memberIntroBtn').disabled = !eligible;
+            $('memberIntroBtn').innerText = eligible ? "최종 멤버 소개 보기" : "데뷔 불가";
+        }
+
+        function openHallDetail(index) {
+            const record = JSON.parse(localStorage.getItem("kpopHallOfFame") || "[]").slice(0, 5)[index];
+            if (!record) return;
+            showOnly("hallSection");
+            renderHall();
+            renderHallDetail(record);
+            $('hallEligibility').className = "eligibility eligible";
+            $('hallEligibility').innerText = "TOP 5 명예의 전당 등록 팀입니다.";
+            $('memberIntroBtn').style.display = "none";
+            $('hallHomeBtn').style.display = "block";
+        }
+
+        function addResultMainButton() {
+            if (!$('resultSection').querySelector(".return-main")) $('resultSection').insertAdjacentHTML("beforeend", '<button class="main-btn return-main" onclick="goToMain()">처음으로</button>');
+        }
+
+        function goToMain() {
+            selectedMembers = [];
+            positionAssignments = {};
+            memberScores = [];
+            selectedAgency = null;
+            showOnly("step1");
+            $('teamName').value = "";
+            renderMainHall();
+        }
+
+        function showMemberIntro() {
+            if (gameScore <= DEBUT_THRESHOLD) {
+                alert(`데뷔 기준은 ${DEBUT_THRESHOLD}점 초과입니다.`);
+                return;
+            }
+            $('finalMemberList').innerHTML = $('resultList').innerHTML;
+            showOnly("memberIntroSection");
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+
+        // 초기 실행
+        renderMember();
+        renderMainHall();
+        $('teamName').placeholder = "팀명 입력 (예: 에스파) ";
+    </script>
+</body>
+
+</html>

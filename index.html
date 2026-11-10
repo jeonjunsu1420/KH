@@ -1394,15 +1394,32 @@
             }, 60);
         }
 
-        function renderResult() {
-            const eligible = gameScore >= DEBUT_THRESHOLD;
-            $('resultTitle').innerText = eligible ? "데뷔 심사 통과" : "데뷔 심사 결과";
-            $('resultMessage').className = `eligibility ${eligible ? "eligible" : "not-eligible"}`;
-            $('resultMessage').innerText = eligible ? `축하합니다. ${gameScore}점으로 데뷔할 수 있습니다.` : `${gameScore}점으로 데뷔 기준 ${DEBUT_THRESHOLD}점을 넘지 못했습니다.`;
-            $('resultList').innerHTML = memberScores.map(item => `<article class="result-card"><img src="${item.member.image}" alt="${item.member.name} 사진"><div><h3>${item.member.name}</h3><span class="result-position">${positions[item.position].label}</span><p>개인 점수: ${item.score}점</p><p>장점: ${item.member.pros}</p><p>보완점: ${item.member.cons}</p></div></article>`).join("");
-            $('rankBtn').disabled = false;
-            $('rankMessage').innerText = "";
-        }
+function renderResult() {
+    const eligible = gameScore >= DEBUT_THRESHOLD;
+    $('resultTitle').innerText = eligible ? "데뷔 심사 통과" : "데뷔 심사 결과";
+    $('resultMessage').className = `eligibility ${eligible ? "eligible" : "not-eligible"}`;
+    $('resultMessage').innerText = eligible ? `축하합니다. ${gameScore}점으로 데뷔할 수 있습니다.` : `${gameScore}점으로 데뷔 기준 ${DEBUT_THRESHOLD}점을 넘지 못했습니다.`;
+    
+    // 🔥 개인 점수를 65점 만점에서 100점 만점으로 환산하여 출력
+    $('resultList').innerHTML = memberScores.map(item => {
+        const convertedScore = Math.round((item.score / 65) * 100); // 100점 만점 환산 공식
+        return `
+            <article class="result-card">
+                <img src="${item.member.image}" alt="${item.member.name} 사진">
+                <div>
+                    <h3>${item.member.name}</h3>
+                    <span class="result-position">${positions[item.position].label}</span>
+                    <p><strong>개인 점수: ${convertedScore}점</strong> (100점 만점 환산)</p>
+                    <p>장점: ${item.member.pros}</p>
+                    <p>보완점: ${item.member.cons}</p>
+                </div>
+            </article>
+        `;
+    }).join("");
+    
+    $('rankBtn').disabled = false;
+    $('rankMessage').innerText = "";
+}
 
         function registerRanking() {
             if (rankingRegistered) return;
